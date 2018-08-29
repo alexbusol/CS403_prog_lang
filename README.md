@@ -1,2 +1,6 @@
 # CS403_prog_lang
-Exploring Scheme, Haskell, Prolog, Smalltalk and Cilk/Cilk++ as a part of CS403: Programming languages course
+Scheme, Haskell = functional programming
+Prolog - logic programming
+Smalltalk - object oriented programming
+Cilk/Cilk++ - parallel programming
+
