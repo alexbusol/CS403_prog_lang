@@ -32,3 +32,9 @@
             (* n (factorial (- n 1)))
       )
 )
+
+; step 2: write combination function that calls facturial
+; to implement the combination formula: n! / k!(n-k)!
+(define (comb n k) 
+      (/ (factorial n) (* (factorial k) (factorial (- n k))))
+)
