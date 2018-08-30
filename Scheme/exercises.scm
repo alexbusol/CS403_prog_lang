@@ -22,3 +22,13 @@
         (+ (log (/ m q) q) 1)
       )
 )
+
+; Exercise 3. Write a comb function such that (comb n k) returns the number of combinations n-choose-k.
+
+; step 1: need to write a helper factorial function
+(define (factorial n)
+      (if (< n 0) #f)
+      (if (<= n 1) 1
+            (* n (factorial (- n 1)))
+      )
+)
