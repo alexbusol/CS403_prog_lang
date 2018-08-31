@@ -38,3 +38,28 @@
 (define (comb n k) 
       (/ (factorial n) (* (factorial k) (factorial (- n k))))
 )
+
+; Exercise 4. Write an insertion_sort function such that (insertion_sort L)
+; returns the elements of L rearranged into ascending order
+
+(define (insertion_sort L)
+      (if null? L)
+            '() ;return an empty list if L is empty
+      ;else, recursively sort the list
+      (insHelper (car L) (insertion_sort (cdr L)))
+     )
+)
+
+(define (insHelper x L)
+	(if (null? L)
+	     (list x)	
+      ;y is the first element of L
+	;ys is the rest of L
+	(let ((y (car L)) (ys (cdr L)))
+		(if (< x y)
+			(cons x L)
+		(cons y (insertionHelper x ys))
+		)
+	)
+)
+)
