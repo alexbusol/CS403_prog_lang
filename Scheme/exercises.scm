@@ -43,11 +43,11 @@
 ; returns the elements of L rearranged into ascending order
 
 (define (insertion_sort L)
-      (if null? L)
-            '() ;return an empty list if L is empty
-      ;else, recursively sort the list
-      (insHelper (car L) (insertion_sort (cdr L)))
-     )
+	(if (null? L)
+		'()
+	    	;recursivelly sort the list if L is not empty
+		(insHelper (car L) (insertion_sort (cdr L)))
+	)
 )
 
 (define (insHelper x L)
