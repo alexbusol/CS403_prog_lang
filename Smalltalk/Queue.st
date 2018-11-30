@@ -17,21 +17,21 @@ Queue extend [
             tnode := Node new setData: key.
             front inNil
                 ifTrue: [front := tnode. back := tnode]
-                ifFalse: [back next: tnode. back := tnode]
+                ifFalse: [back getNext: tnode. back := tnode]
     ]
 
     remove: key [
             front isNil ifTrue: [^nil].
 
-            key := front data.
-            front := front next.
+            key := front getData.
+            front := front getNext.
             ^key
     ]
 
     display [
         | tnode |
         tnode := front.
-        [tnode notNil] whileTrue: [Transcript display: tnode data; cr. tnode := tnode next]
+        [tnode notNil] whileTrue: [Transcript display: tnode getData; cr. tnode := tnode getNext]
 
     ]
 ]
@@ -46,7 +46,7 @@ Queue extend [
     do: aBlock [
         | tnode |
         tnode := front.
-        [tnode notNil] whileTrue: [aBlock value: tnode. tnode := tnode next]
+        [p notNil] whileTrue: [aBlock value: tnode. tnode := tnode getNext]
     ]
 
     collect: block [
@@ -109,4 +109,50 @@ Transcript display: (q2 inject: 1 into: [:a :b | a * b]); cr.
 Transcript cr.
 
 Transcript display: (q2 detect: [:x | x< 15] ifNone: [Transcript display: 'none found']).
+
+
+"================ PRIORITY QUEUE ================="
+
+Queue subclass: #PriorityQueue.
+
+PriorityQueue extend [
+    insert: key [
+        | tnode |
+        (front isNil or: [key < front getData])
+            ifTrue: [front := Node new setData: key; setNext: front. ^self].
+
+        tnode := front.
+        [tnode getNext isNil or: [key < (p getNext) getData]]
+            whileFalse: [tnode := tnode getNext].
+        tnode setNext: (Node new setData: key; setNext: tnode getNext)
+    ]
+
+    remove [
+        | tnode key |
+        front isNil ifTrue: [^nil].
+
+        tnode := front.
+        key := front getData.
+
+        [tnode isNil] whileFalse: [
+                (tnode getData < key) ifTrue: [key := tnode getData].
+                tnode := tnode next
+        ].
+
+        (key == front getData) ifTrue: [front := front getNext. ^key].
+
+        tnode := front.
+
+        [key ~= (tnode getNext) getData] whileTrue: [tnode := tnode getNext].
+        tnode setNext: (tnode getNext) getNext.
+        ^key
+    ]
+    
+]
+
+pq := PriorityQueue new.
+pq insert: 20; insert: 40; insert: 10; insert: 35.
+Transcript display: pq; cr.
+4 timesRepeat: [Transcript display: q remove; cr].
+Transcript cr.
 
