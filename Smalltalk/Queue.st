@@ -58,3 +58,55 @@ Queue extend [
 
 ]
 
+q2 := Queue new.
+q2 := insert: 20; insert: 40; insert: 10; insert: 1003; insert: 90.
+
+q2 do: [:x | Transcript display: x; cr].
+
+res1 := q collect: [:x | x*x].
+res do: [:x | Transcript display: x; cr].
+Transcript cr.
+
+Queue extend [
+    select: block [
+        | tqueue |
+        self do: [:each | (block value: each) ifTrue: tqueue insert: each]
+        ^tqueue
+    ]
+
+    reject: block [
+        | tqueue |
+        self do: [:each | (block value: each) ifFalse: tqueue insert: each]
+        ^tqueue
+    ]
+
+    inject: start into: block [
+        | result |
+        result := start.
+        self do: [:each | result := block value: result value: each].
+        ^result
+    ]
+
+    detect: block ifNone: defaultBlock [
+        self do: [:each | (block value: each) ifTrue: [^each]].
+        "else if no matches were found"
+        ^defaultBlock value
+    ]
+
+]
+
+sel := q2 select: [:x | x>15 and: [x<35]].
+sel do: [:x | Transcript display: x; cr].
+Transcript cr.
+
+rej := q2 reject: [:x | x>15 and: [x<35]]/
+rej do: [:x | Transcript display: x; cr].
+Transcript cr.
+
+
+Transcript display: (q2 inject: 0 into: [:a :b | a + b]); cr.
+Transcript display: (q2 inject: 1 into: [:a :b | a * b]); cr.
+Transcript cr.
+
+Transcript display: (q2 detect: [:x | x< 15] ifNone: [Transcript display: 'none found']).
+
