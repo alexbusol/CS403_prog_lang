@@ -80,3 +80,11 @@
         (if (= (square m) num) m
             (if (> (square m) num) (mysqrt_help num i (- m 1))
                 (mysqrt_help num m k)))))
+
+
+;computes a logarithm of any base
+(define (log base num) (log_help base 1 num))
+
+(define (log_help base expt num) 
+    (if (= (power base expt) num) expt
+        (log_help base (+ expt 1) num)))
