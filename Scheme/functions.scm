@@ -60,4 +60,23 @@
     (if (null? L) '()
     (append (reverse (cdr L)) (list (car L)))))
 
+;transforms a nested list into a single-level list
+(define (flatten list) 
+    (if (null? list) '()
+        (if (pair? list) (append (flatten (car list)) (flatten (cdr list)))
+            (cons '() list)))) ;this triggers if a lise is not a pair (when a single element is passed
+                
+;recursive power function            
+(define (power num expt)
+    (if (= expt 0) 1
+        (* num (power num (- expt 1)))))
 
+
+;square root function that uses binary search for better efficiency
+(define (mysqrt num) (mysqrt_help num 0 num))
+
+(define (mysqrt_help num i k) 
+    (let ((m (quotient (+ i k) 2)))
+        (if (= (square m) num) m
+            (if (> (square m) num) (mysqrt_help num i (- m 1))
+                (mysqrt_help num m k)))))
