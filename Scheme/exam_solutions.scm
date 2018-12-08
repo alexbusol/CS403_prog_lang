@@ -27,3 +27,19 @@
 (define (a2p alist) (if (null? alist) '()
     (if (not (pair? alist)) (cons alist '())
     (append (a2p (car alist)) (a2p (cdr alist))))))
+
+
+(define (p2a plist) (if (null? plist) '()
+    (cons (cons (car plist) (car (cdr plist))) (p2a (cdr (cdr plist))))))
+
+(define (sequence s f n) (if (= n 0) '()
+    (cons s (sequence (f s) f (- n 1)))))
+
+;reverses the list L and all of the nested sublists
+(define (twist L) (if (not (pair? L)) L
+    (map twist (reverse L))))
+
+;counts how many non-null elements are in L and its sublists
+(define (countall L) (if (null? L) 0
+    (if (not (pair? L)) 1
+    (+ (countall (car L)) (countall (cdr L))))))
