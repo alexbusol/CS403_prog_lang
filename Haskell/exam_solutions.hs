@@ -42,3 +42,38 @@ series s f n = s : series (f s) f (n-1)
 powerset [] = [[]]
 powerset (x:xs) = (map (x:) s) ++ s where s = powerset xs
 
+foldr' _ [x] = x
+foldr' func (x:xs) = func x (foldr' func xs)
+
+foldl' _ [x] = x
+foldl' func (x0:x1:xs) = foldl' func ((func x0 x1) :xs)
+
+table func = [[func x y | y <- [0..]] | x<-[0..]]
+
+subtable rows cols table = take rows (map (take cols) table)
+
+fun _ _ _ 0 [] = 0
+fun binary unary pred id (x:xs) = if pred x then binary (unary x) (fun binary unary pred id xs) else (fun binary unary pred id xs)
+
+isPermutation [] _ = True
+isPermutation (x:xs) ys = if check x ys then isPermutation xs ys else False
+
+check _ [] = False
+check elem (x:xs) = if elem == x then True else check elem xs
+
+equiv n = ehelp 0 n where ehelp i k = if i < k then [x | x<-[i, n+i..]] : ehelp (i+1) k else []
+
+
+equiv' n = [[n*j + k | j<-[0..]] | k<-[0..n-1]]
+
+evalpoly [] _ = 0
+evalpoly list var = evHelp list 0 var
+
+evHelp [] _ _ = 0
+evHelp (x:xs) expt var = (x * var^expt) + evHelp xs (expt + 1) var
+
+--another way to write evalpoly
+evalpoly [] _ = 0
+evalpoly' (x:xs) var = x + var * evalpoly xs var
+
+
