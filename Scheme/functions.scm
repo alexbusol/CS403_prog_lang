@@ -63,8 +63,8 @@
 ;transforms a nested list into a single-level list
 (define (flatten list) 
     (if (null? list) '()
-        (if (pair? list) (append (flatten (car list)) (flatten (cdr list)))
-            (cons '() list)))) ;this triggers if a lise is not a pair (when a single element is passed
+        (if (not (pair? list) (cons list '()) ;this triggers if list is not a pair (when a single element is passed)
+            (append (flatten (car list)) (flatten (cdr list)))))) 
                 
 ;recursive power function            
 (define (power num expt)
