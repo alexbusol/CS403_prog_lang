@@ -77,3 +77,16 @@ evalpoly [] _ = 0
 evalpoly' (x:xs) var = x + var * evalpoly xs var
 
 
+triples xs ys zs = [(x,y,z) | x<-xs, y<-ys, z<-zs]
+
+pythagoras n = [(x, y, z) | x<-[1..n], y<-[x+1..n], z<-[y+1..n], x^2 + y^2 == z^2]
+
+combine f g m = help f (map (help g) m) where help func (x:xs) = foldr func x xs
+
+transpose ([]:_) = []
+transpose m = map head m : transpose (map tail m)
+
+mix f g m = g (map f (transpose m))
+
+diffproduct [] = 1
+diffproduct (x:xs) = product (map (x-) xs) * diffproduct xs
