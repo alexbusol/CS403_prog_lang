@@ -63,7 +63,7 @@ check elem (x:xs) = if elem == x then True else check elem xs
 
 equiv n = ehelp 0 n where ehelp i k = if i < k then [x | x<-[i, n+i..]] : ehelp (i+1) k else []
 
-
+--another way to solve equiv
 equiv' n = [[n*j + k | j<-[0..]] | k<-[0..n-1]]
 
 evalpoly [] _ = 0
