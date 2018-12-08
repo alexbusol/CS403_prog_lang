@@ -43,3 +43,30 @@
 (define (countall L) (if (null? L) 0
     (if (not (pair? L)) 1
     (+ (countall (car L)) (countall (cdr L))))))
+
+
+(define (mapall L) (if (null? L) '()
+    (if (not (pair? L)) (f L)
+    (cons (mapall f (car L)) (mapall f (cdr L))))))
+
+
+(define (fun L) (if (null? L) 0
+    (if (and (= (modulo (car L) 2) 1) (> (car L) 0)) (+ (square (square (car L))) (fun (cdr L))) (fun (cdr L)))))
+
+
+(define (matrix row col n) (if (= row 0) '()
+    (cons (buildrow col n) (matrix (- row 1) col (+ n col)))))
+
+(define (buildrow col n) (if (= col 0) '()
+    (cons n (buildrow (- col 1) (+ n 1)))))
+
+(define (last L) (car (reverse L)))
+
+(define (init L) (reverse (cdr (reverse L))))
+
+(define (antitranspose M) (if (null? (car M)) '() (cons (reverse (map last M)) (antitranspose (map init M)))))
+
+(define (apply-left funlist x) (if (null? funlist) x
+    (apply-left (cdr funlist) ((car funlist) x))))
+
+(define (apply-right funlist x) (apply-left (reverse ))
