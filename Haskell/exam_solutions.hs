@@ -90,3 +90,19 @@ mix f g m = g (map f (transpose m))
 
 diffproduct [] = 1
 diffproduct (x:xs) = product (map (x-) xs) * diffproduct xs
+
+expand 0 = []
+expand n = mod n 10 : expand (div n 10)
+
+contract [] = 0
+contract (x:xs) = x + 10 * contract xs   
+
+appendAll [] = []
+appendAll (x:xs) = x ++ appendAll xs
+
+fasten [] _ = []
+fasten (x:xs) (y:ys) = (x,y) : fasten xs ys
+
+unfasten [] = []
+unfasten ((x,y):zs) = (x:xs, y:ys) where (xs,ys) = unfasten zs
+
