@@ -70,3 +70,13 @@
     (apply-left (cdr funlist) ((car funlist) x))))
 
 (define (apply-right funlist x) (apply-left (reverse ))
+  
+(define (first-atom L) (if (not (pair? L)) L 
+    (let ((x (first-atom (car L)))) (if (null? x) (first-atom (cdr L)) x))))
+  
+(define (last-atom L) (if (not (pair? L)) L
+    (let ((x (last-atom (cdr L)))) (if (null? x) (last-atom (car L)) x))))
+  
+(define (maxdepth L) (if (null? L) 1
+    (if (not (pair? L)) 0
+        (+ 1 (fold-right max 0 (map maxdepth L))))))
