@@ -50,3 +50,27 @@ diagonal([], []).
 diagonal([[H|_]|M], [H|TR]) :- removeHeads(M, A), diagonal(A, TR).
 removeHeads([], []).
 removeHeads([[_|T]|M], [T|TR]) :- removeHeads(M, TR).
+
+calc(num(A), A).
+calc(add(A, B), R) :- calc(A, X), calc(B, Y), R is X+Y.
+calc(subt(A, B), R) :- calc(A, X), calc(B, Y), R is X-Y.
+calc(mul(A, B), R) :- calc(A, X), calc(B, Y), R is X*Y.
+calc(div(A, B), R) :- calc(A, X), calc(B, Y), R is X/Y.
+
+isdot(A, B) :- isdhelper(A, 1, B).
+isdhelper(1, K, K).
+isdhelper(A, K, R) :- M is K*A, L is A-1, J is K+1, isdhelper(L, J, Q), R is M+Q.
+
+merge_sort([], []).
+merge_sort([X], [X]).
+merge_sort(L, Z) :- length(L, N), N>1, split(L, P, Q), merge_sort(P, X), merge_sort(Q, Y), merge(X, Y, Z).
+
+split([], [], []).
+split([A], [A], []).
+split([A,B|T], [A|X], [B|Y]) :- split(T, X, Y).
+
+merge([], L, L).
+merge(L, [], L).
+merge([H|T], [H2|T2], [H|T3]) :- H<H2, merge(T, [H2|T2], T3).
+merge([H|T], [H2|T2], [H2|T3]) :- H>=H2, merge([H|T], T2, T3).
+
