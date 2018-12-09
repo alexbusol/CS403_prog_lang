@@ -99,3 +99,30 @@ mysqrt(N, R) :- sqrt_help(N, 0, N, R).
 sqrt_help(N, L, H, M) :- M is div((L+H), 2), N is M*M.
 sqrt_help(N, L, H, R) :- M is div((L+H), 2), K is M*M, N>K, Z is M+1, sqrt_help(N, Z, H, R).
 sqrt_help(N, L, H, R) :- M is div((L+H), 2), K is M*M, N<K, Z is M-1, sqrt_help(N, L, Z, R).
+
+countall([], 0).
+countall(X, 1) :- atomic(X), not(x=[]).
+countall([H|T], R) :- countall(H, K), countall(T, J), R is K+J.
+
+fun([], 0).
+fun([H|T], R) :- H>0, 1 is mod(H, 2), fun(T, A), R is A + H*H*H*H.
+fun([_|T], R) :- fun(T, R).
+
+evalpoly([], _, 0).
+evalpoly([H|T], V, R) :- evalpoly(T, V, A), R is H+A*V.
+
+invfact(F, R) :- invhelper(F, 1, R).
+invhelper(F, I, R) :- fact(I, Q), Q>F,  R is I-1.
+invhelper(F, I, R) :- fact(I, Q), Q=<F, J is I+1, invhelper(F, J, R).
+
+fact(1, 1) :- !.
+fact(N,R) :- Q is N-1, fact(Q, A), R is A*N.
+
+even_length([]).
+even_length([_|T]) :- odd_length(T).
+odd_length([_|T]) :- even_length(T).
+
+removeDup([], []).
+removeDup([X|T], TR) :- mymember(X, T), removeDup(T, TR).
+removeDup([H|T], [H|TR]) :- not(mymember(H, T)), removeDup(T,TR).
+
