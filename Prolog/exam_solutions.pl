@@ -74,3 +74,28 @@ merge(L, [], L).
 merge([H|T], [H2|T2], [H|T3]) :- H<H2, merge(T, [H2|T2], T3).
 merge([H|T], [H2|T2], [H2|T3]) :- H>=H2, merge([H|T], T2, T3).
 
+/* reverse list and all the nested sublists */
+twist(X, X) :- atomic(X).
+twist([H|T], R) :- twist(H, Q), twist(T, Z), append(Z, [Q], R).
+
+transpose([[]|_], []).
+transpose(M, [HR|TR]) :- transHelp(M, TL, HR), transpose(TL, TR).
+transHelp([], [], []).
+transHelp([[H|T]|R], [T|TL], [H|TR]) :- transHelp(R, TL, TR).
+
+mylast([], []).
+mylast([X|[]], X) :- !.
+mylast([_|T], R) :- mylast(T, R).
+
+init([H|[]], []).
+init([H|T], [H|TR]) :- init(T, TR).
+
+antitranspose([[]|_], []) :- !.
+antitranspose(M, [X|Z]) :- atransHelp(M, J, A), reverse(J, X), antitranspose(A, Z).
+atransHelp([], [], []).
+atransHelp([H|T], [K|T1], [J|T2]) :- mylast(H, K), init(H, U), reverse(U, J), atransHelp(T, T1, T2).
+
+mysqrt(N, R) :- sqrt_help(N, 0, N, R).
+sqrt_help(N, L, H, M) :- M is div((L+H), 2), N is M*M.
+sqrt_help(N, L, H, R) :- M is div((L+H), 2), K is M*M, N>K, Z is M+1, sqrt_help(N, Z, H, R).
+sqrt_help(N, L, H, R) :- M is div((L+H), 2), K is M*M, N<K, Z is M-1, sqrt_help(N, L, Z, R).
