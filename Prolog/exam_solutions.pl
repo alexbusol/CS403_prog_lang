@@ -35,3 +35,18 @@ ihelper([H|T], A, R) :- insert(H, A, Q), ihelper(T, Q, R).
 insert(X, [Y|T], [Y|TR]) :- X>Y, insert(X, T, TR).
 insert(X, [Y|T], [X,Y|T]) :- X=<Y.
 insert(X, [], [X]).
+
+intersect(A, B) :- mymember(Z, A), mymember(Z, B).
+
+mymember(H, [H|_]).
+mymember(X, [_|T]) :- mymember(X, T).
+
+memberGen([H|_], [H|_]).
+memberGen([_|T], [_|T1]) :- memberGen(T, T1).
+
+disjoint(A, B) :- not(intersect(A,B)).
+
+diagonal([], []).
+diagonal([[H|_]|M], [H|TR]) :- removeHeads(M, A), diagonal(A, TR).
+removeHeads([], []).
+removeHeads([[_|T]|M], [T|TR]) :- removeHeads(M, TR).
