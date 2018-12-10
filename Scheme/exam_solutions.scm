@@ -69,7 +69,7 @@
 (define (apply-left funlist x) (if (null? funlist) x
     (apply-left (cdr funlist) ((car funlist) x))))
 
-(define (apply-right funlist x) (apply-left (reverse ))
+(define (apply-right funlist x) (apply-left (reverse funlist))
   
 (define (first-atom L) (if (not (pair? L)) L 
     (let ((x (first-atom (car L)))) (if (null? x) (first-atom (cdr L)) x))))
