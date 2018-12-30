@@ -2,5 +2,5 @@
 Scheme, Haskell = functional programming<br />
 Prolog - logic programming<br />
 Smalltalk - purely object oriented programming<br /> 
-Cilk/Cilk++ - parallel programming
+Cilk/Cilk++ - parallel programming extensions for C/C++
 
